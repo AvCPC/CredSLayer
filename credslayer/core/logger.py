@@ -3,6 +3,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+logger = logging
 
 def debug(msg, *args):
     logging.debug(msg, *args)
