@@ -122,7 +122,7 @@ def _process_packets_from(packets_input: Capture, manager: SessionsManager, must
                 logger.error("An exception occurred but CredSLayer will keep going.")
 
     except TSharkCrashException:
-        traceback.print_exc()
+        #traceback.print_exc()
         logger.error("tshark crashed :(")
         clean_before_exit()
 
