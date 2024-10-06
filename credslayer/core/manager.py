@@ -168,23 +168,26 @@ def process_pcap(filename: str, must_inspect_strings=False, tshark_filter=None, 
     sessions_manager = SessionsManager()
     Session.creds_found_callback = creds_found_callback
 
-    with pyshark.FileCapture(filename, display_filter=tshark_filter, decode_as=decode_as, debug=debug) as pcap:
-        logger.info("Processing packets in '{}'".format(filename))
+    try:
+        with pyshark.FileCapture(filename, display_filter=tshark_filter, decode_as=decode_as, debug=debug) as pcap:
+            logger.info("Processing packets in '{}'".format(filename))
 
-        start_time = time.time()
+            start_time = time.time()
 
-        _process_packets_from(pcap, sessions_manager, must_inspect_strings)
+            _process_packets_from(pcap, sessions_manager, must_inspect_strings)
 
-        remaining_credentials = sessions_manager.get_remaining_content()
+            remaining_credentials = sessions_manager.get_remaining_content()
 
-        if remaining_credentials:
-            logger.info("Interesting things have been found but the CredSLayer wasn't able validate them: ")
-            # List things that haven't been reported (sometimes the success indicator has
-            # not been captured and credentials stay in the session without being logged)
-            for session, remaining in remaining_credentials:
-                logger.info(session, str(remaining))
+            if remaining_credentials:
+                logger.info("Interesting things have been found but the CredSLayer wasn't able validate them: ")
+                # List things that haven't been reported (sometimes the success indicator has
+                # not been captured and credentials stay in the session without being logged)
+                for session, remaining in remaining_credentials:
+                    logger.info(session, str(remaining))
 
-        logger.info("Processed in {0:.3f} seconds.".format(time.time() - start_time))
+            logger.info("Processed in {0:.3f} seconds.".format(time.time() - start_time))
+    except TSharkCrashException:
+        pass
 
     return sessions_manager
 
