@@ -93,7 +93,7 @@ class Session(dict):
         else:
             raise SessionException("Unsupported protocol id: " + str(proto_id))
 
-        if packet[self.protocol].srcport == packet[self.protocol].dstport:
+        if self.protocol in packet and packet[self.protocol].srcport == packet[self.protocol].dstport:
             # Alphabetic ordering on IP addresses if ports are the same
             if packet[ip_type].src < packet[ip_type].dst:
                 self._session_string_representation = src + " <-> " + dst
