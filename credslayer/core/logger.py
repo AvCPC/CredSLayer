@@ -6,10 +6,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger("CredSlayer")
 
 def debug(msg, *args):
-    logger.debug(f"{msg} {" | ".join(args)}")
+    logger.debug(f"{msg} {' | '.join(args)}")
 
 def info(msg, *args):
-    logger.info(f"{msg} {" | ".join(args)}")
+    logger.info(f"{msg} {' | '.join(args)}")
 
 def error(msg, *args):
     logger.error(f"{msg} {' | '.join(args)}")
