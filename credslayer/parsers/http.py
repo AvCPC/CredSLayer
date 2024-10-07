@@ -60,7 +60,10 @@ def analyse(session: Session, layer: BaseLayer):
             else:
                 logger.info(session, "Authorization header found: '{}'".format(layer.authorization))
 
-        # POST parameters
+        # Cookies
+        if hasattr(layer, "cookie"):
+            cookies = layer.cookie
+            logger.info(session, "Cookies found: '{}'".format(cookies))
         if hasattr(layer, "file_data"):
             post_content = layer.file_data
 
