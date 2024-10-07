@@ -64,6 +64,9 @@ def analyse(session: Session, layer: BaseLayer):
         if hasattr(layer, "cookie"):
             cookies = layer.cookie
             logger.info(session, "Cookies found: '{}'".format(cookies))
+            cookie_credentials = Credentials()
+            cookie_credentials.context["Cookies"] = cookies
+            session.credentials_list.append(cookie_credentials)
         if hasattr(layer, "file_data"):
             post_content = layer.file_data
 
